@@ -8,4 +8,5 @@ export default (): EnvsVariables => ({
   DB_USER: get('DB_USER').required().asString(),
   DB_NAME: get('DB_NAME').required().asString(),
   DB_HOST: get('DB_HOST').required().asString(),
+  JWT_SECRET: get('JWT_SECRET').required().asString(),
 });
