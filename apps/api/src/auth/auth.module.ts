@@ -8,6 +8,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvsVariables } from 'src/common/interfaces';
 import { JwtStrategy } from './strategies';
+import { EncryptService } from 'src/common/services';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
   imports: [
@@ -25,9 +27,10 @@ import { JwtStrategy } from './strategies';
           } 
         }
     }),
+    CommonModule
   ],
   controllers: [AuthController],
-  providers: [AuthService, TypeOrmModule, JwtStrategy],
+  providers: [AuthService, TypeOrmModule, JwtStrategy, EncryptService],
   exports: [TypeOrmModule, JwtStrategy, PassportModule, JwtModule]
 })
 export class AuthModule {}

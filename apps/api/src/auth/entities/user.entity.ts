@@ -1,5 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+export interface UserUniqueAttr {
+  id?: string;
+  email: string;
+}
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -8,7 +12,7 @@ export class User {
   @Column('character varying', { length: 100 })
   name: string;
 
-  @Column('character varying', { length: 255 })
+  @Column('character varying', { length: 255, unique: true })
   email: string;
 
   @Column('character varying', { length: 255 })
