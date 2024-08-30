@@ -8,7 +8,7 @@ import { UserRegisterDto } from './dto';
 import { ResponseController } from 'src/common/interfaces';
 import { ApiTags } from '@nestjs/swagger';
 import { TokenResponse } from './responses';
-import { ApiRestResponse } from 'src/common/decorators';
+import { ApiRestEndpointDescription, ApiRestResponse } from 'src/common/decorators';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -16,6 +16,11 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiRestEndpointDescription({
+    summary: 'Create an user and authenticate them',
+    bodyInterface: 'IRegisterUserPayload',
+    responseInterface: 'IApiResponse<TokenResponse>'
+  })
   @ApiRestResponse({
     genericType: TokenResponse,
     description: 'Welcome to docuform'

@@ -8,9 +8,11 @@ export class ApiRestResponseModel<T> implements IApiResponse<T> {
     path: string;
     @ApiProperty()
     statusCode: number;
-    @ApiProperty()
-    error?: string;
-    @ApiProperty()
+    @ApiProperty({
+        nullable: true
+    })
+    error?: string | null;
+    @ApiProperty({ example: 'string | string[]' })
     message: string | string[];
     @ApiProperty()
     result?: T;
