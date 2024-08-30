@@ -5,7 +5,6 @@ import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvsVariables } from './common/interfaces';
 import envs from './common/config/envs';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
