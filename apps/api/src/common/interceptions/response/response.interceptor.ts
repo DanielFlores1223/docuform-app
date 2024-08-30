@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, InternalServerErrorException, NestInterceptor } from '@nestjs/common';
-import { ApiResponse } from 'global-interfaces';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { ResponseController } from 'src/common/interfaces';
+import { ApiRestResponseModel } from 'src/common/responses';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
@@ -19,7 +19,7 @@ export class ResponseInterceptor implements NestInterceptor {
     const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const responseException = exception.getResponse() as { message: string | string[], error: string };
 
-    const errorResponse: ApiResponse<unknown> = {
+    const errorResponse: ApiRestResponseModel<unknown> = {
       status: false,
       path: request.url,
       statusCode: status,
@@ -30,7 +30,7 @@ export class ResponseInterceptor implements NestInterceptor {
     return new HttpException(errorResponse, status);
   }
 
-  responseHandler(res: ResponseController<unknown>, context: ExecutionContext): ApiResponse<unknown> {
+  responseHandler(res: ResponseController<unknown>, context: ExecutionContext): ApiRestResponseModel<unknown> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest(); 

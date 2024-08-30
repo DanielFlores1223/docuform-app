@@ -1,7 +1,7 @@
 import { IsEmail, IsString, Matches, MaxLength, MinLength } from "class-validator";
-import { RegisterUserPayload } from 'global-interfaces';
+import { IRegisterUserPayload } from 'global-interfaces';
 
-export class UserRegisterDto implements RegisterUserPayload {
+export class UserRegisterDto implements IRegisterUserPayload {
     @IsString()
     @MinLength(1)
     name: string;

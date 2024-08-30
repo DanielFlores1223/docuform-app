@@ -4,9 +4,9 @@ import { User, UserUniqueAttr } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { UserRegisterDto } from './dto';
-import { TokenResponse } from 'global-interfaces';
 import { EncryptService } from 'src/common/services';
 import { JwtPaylaod } from './interfaces';
+import { TokenResponse } from './responses';
 
 @Injectable()
 export class AuthService {

@@ -1,0 +1,1 @@
+export * from './api-rest-response/api-rest-response.decorator';
