@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { DynamicForm } from 'src/dynamic-form/entities';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export interface UserUniqueAttr {
   id?: string;
@@ -20,4 +21,7 @@ export class User {
 
   @Column('boolean', { default: true })
   active: boolean;
+
+  @OneToMany(() => DynamicForm, (dynamicForm) => dynamicForm.user)
+  dymanicForms: DynamicForm[];
 }

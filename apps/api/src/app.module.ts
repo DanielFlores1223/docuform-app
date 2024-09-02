@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvsVariables } from './common/interfaces';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 import envs from './common/config/envs';
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import envs from './common/config/envs';
       }),
       inject: [ConfigService],
     }),
+    DynamicFormModule,
   ],
   controllers: [],
   providers: [],

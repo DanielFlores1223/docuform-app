@@ -9,14 +9,12 @@ import { ResponseController } from 'src/common/interfaces';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TokenResponse } from './responses';
 import { ApiRestEndpointDescription, ApiRestResponse } from 'src/common/decorators';
-import { Auth } from './decorators';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Auth()
   @Post('register')
   @ApiBearerAuth()
   @ApiRestEndpointDescription({
