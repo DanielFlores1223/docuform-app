@@ -30,6 +30,7 @@ async function bootstrap() {
         easy to integrate into various applications.
     `)
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
