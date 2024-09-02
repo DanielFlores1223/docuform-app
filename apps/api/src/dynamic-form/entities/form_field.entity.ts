@@ -10,6 +10,9 @@ export class FormField {
     @Column('character varying', { length: 50 })
     name: string;
 
+    @Column('character varying', { length: 255, name: 'scanned_document_separator' })
+    scannedDocumentSeparator: string;
+
     @ManyToOne(() => DynamicForm, (dynamicForm) => dynamicForm.formFields)
     @JoinColumn({ name: 'id_dynamic_form' })
     dynamicForm: DynamicForm
