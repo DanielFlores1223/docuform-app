@@ -1,9 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Not, Repository } from 'typeorm';
 import { User, UserUniqueAttr } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { UserRegisterDto } from './dto';
+import { LoginDto, UserRegisterDto } from './dto';
 import { EncryptService } from 'src/common/services';
 import { JwtPaylaod } from './interfaces';
 import { TokenResponse } from './responses';
@@ -37,6 +37,27 @@ export class AuthService {
     const token = this.getJwtToken({ id: userDb.id });
 
     return { token }
+  }
+
+  async login(loginDto: LoginDto): Promise<TokenResponse> {
+    const { email, password } = loginDto;
+
+    const userDB = await this.userRepository.findOne({
+      where: { active: true, email: email },
+      select: { id: true, password: true }
+    });
+
+    if(!userDB)
+      throw new NotFoundException('Credentials are incorrect');
+
+    const correctPassword = await this.encryptService.comparePassword(password, userDB.password);
+
+    if(!correctPassword)
+      throw new NotFoundException('Credentials are incorrect');
+  
+    const token = this.getJwtToken({ id: userDB.id });
+
+    return { token };
   }
 
   private async validateUniqueFieldsExist(user: UserUniqueAttr): Promise<never | boolean> {
