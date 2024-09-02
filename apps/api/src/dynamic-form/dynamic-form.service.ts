@@ -5,7 +5,7 @@ import { UpdateDynamicFormDto } from './dto/update-dynamic-form.dto';
 @Injectable()
 export class DynamicFormService {
   create(createDynamicFormDto: CreateDynamicFormDto) {
-    return 'This action adds a new dynamicForm';
+    return 'This action adds a new dynamicForm ' + createDynamicFormDto;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class DynamicFormService {
   }
 
   update(id: number, updateDynamicFormDto: UpdateDynamicFormDto) {
-    return `This action updates a #${id} dynamicForm`;
+    return `This action updates a #${id} dynamicForm` + updateDynamicFormDto;
   }
 
   remove(id: number) {

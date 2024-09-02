@@ -4,7 +4,7 @@ import { ReferenceObject, SchemaObject } from '@nestjs/swagger/dist/interfaces/o
 import { ApiRestResponseModel } from 'src/common/responses';
 
 interface Options <T> {
-    genericType: T,
+    genericType?: T,
     description?: string,
     array?: boolean
 }
@@ -12,6 +12,14 @@ interface Options <T> {
 export const ApiRestResponse = <GenericType extends Type<unknown>>(options: Options<GenericType>) => {
     const { genericType, description = 'Ok', array } = options;
     
+    if(!genericType)
+        return applyDecorators(
+            ApiOkResponse({
+                description,
+                type: ApiRestResponseModel
+            })
+        );
+
     let schema: SchemaObject & Partial<ReferenceObject> = {
         $ref: getSchemaPath(ApiRestResponseModel),
         properties: { result: { $ref: getSchemaPath(genericType) } }
