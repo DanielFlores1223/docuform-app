@@ -5,11 +5,13 @@ import { IRegisterUserPayload } from 'global-interfaces';
 export class UserRegisterDto implements IRegisterUserPayload {
     @IsString()
     @MinLength(1)
+    @MaxLength(100)
     @ApiProperty()
     name: string;
 
     @IsString()
     @IsEmail()
+    @MaxLength(255)
     @ApiProperty()
     email: string;
 
