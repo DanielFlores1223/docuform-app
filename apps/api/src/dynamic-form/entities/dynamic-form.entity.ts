@@ -1,8 +1,9 @@
 import { User } from "src/auth/entities";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { FormField } from "./form_field.entity";
 
 @Entity('dynamic-forms')
+@Unique('unique_name_user', ['name', 'user'])
 export class DynamicForm {
     @PrimaryGeneratedColumn()
     id: number;
@@ -17,6 +18,6 @@ export class DynamicForm {
     @JoinColumn({ name: 'id_user' })
     user: User
 
-    @OneToMany(() => FormField, (formField) => formField.dynamicForm)
-    formFields: FormField;
+    @OneToMany(() => FormField, (formField) => formField.dynamicForm, { cascade: true })
+    formFields: FormField[];
 }

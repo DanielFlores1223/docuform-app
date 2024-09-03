@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { ArrayMinSize, IsArray, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
 import { FieldsDto } from "./fields.dto";
-import { CreateDynamicFormPayload } from "global-interfaces";
+import { ICreateDynamicFormPayload } from "global-interfaces";
 
-export class CreateDynamicFormDto implements CreateDynamicFormPayload {
+export class CreateDynamicFormDto implements ICreateDynamicFormPayload {
     @IsString()
     @MinLength(1)
     @MaxLength(100)
