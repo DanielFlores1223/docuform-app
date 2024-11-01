@@ -1,7 +1,10 @@
-<mat-card appearance="outlined" [ngStyle]="{ minWidth: '400px' }">
-  <mat-card-header>
-    <mat-card-title> Login </mat-card-title>
-    <!-- <mat-card-subtitle>Herding group</mat-card-subtitle> -->
+
+<mat-card appearance="outlined" >
+  <mat-card-header  class="header">
+    <mat-card-title  class="header-title"> 
+      <img src="/logo.svg" alt="logo_letra" width="100" >
+      Welcome
+     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form>
@@ -25,12 +28,11 @@
       </mat-form-field>
     </form>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-flat-button extended class="w-100">
-      <mat-icon>login</mat-icon>
-      Login
-    </button>
-    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
-
+  <mat-card-actions class="actions">
+        <button mat-flat-button extended class="w-100">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+        <a mat-button class="flex align-items-center">Create an account</a>
   </mat-card-actions>
 </mat-card>
