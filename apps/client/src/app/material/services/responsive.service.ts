@@ -13,15 +13,17 @@ interface ScreenOptions {
 })
 export class ResponsiveService {
   private breakpointObserver = inject(BreakpointObserver);
+  private readonly xsmall = Breakpoints.XSmall;
   private readonly small = Breakpoints.Small;
   private readonly medium = Breakpoints.Medium;
   private readonly large = Breakpoints.Large;
   private readonly xlarge = Breakpoints.XLarge;
 
-  private screenWidth = toSignal(this.breakpointObserver.observe([this.small, this.medium, this.large, this.xlarge]));
-  public smallWidth = computed(() => this.screenWidth()?.breakpoints[this.small]);
+  private screenWidth = toSignal(this.breakpointObserver.observe([this.xsmall, this.small, this.medium, this.large, this.xlarge]));
+  public smallWidth = computed(() => this.screenWidth()?.breakpoints[this.small] || this.screenWidth()?.breakpoints[this.xsmall]);
   public mediumWidth = computed(() => this.screenWidth()?.breakpoints[this.medium]);
   public largeWidth = computed(() => this.screenWidth()?.breakpoints[this.large] || this.screenWidth()?.breakpoints[this.xlarge]);
+
 
   public responsive(options: ScreenOptions) {
     return computed(() => {

@@ -1,0 +1,9 @@
+.form-grid {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.form-grid mat-form-field {
+  flex: 1 1 48%;
+}

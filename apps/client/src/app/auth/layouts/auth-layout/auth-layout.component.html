@@ -7,10 +7,11 @@
   </mat-grid-tile>
 
   <mat-grid-tile
-  [colspan]="layout.responsive({ sm: 4, md: 2 })()"
-  rowspan="1"
->
-  <img src="/main_logo.svg" alt="logo" width="100%">
-</mat-grid-tile>
+    *ngIf="!layout.smallWidth()"
+    [colspan]="layout.responsive({ sm: 4, md: 2 })()"
+    rowspan="1"
+  >
+    <img src="/main_logo.svg" alt="logo" width="100%">
+  </mat-grid-tile>
 
 </mat-grid-list>

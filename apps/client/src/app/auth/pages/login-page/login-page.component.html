@@ -1,9 +1,15 @@
 
-<mat-card appearance="outlined" >
-  <mat-card-header  class="header">
-    <mat-card-title  class="header-title"> 
-      <img src="/logo.svg" alt="logo_letra" width="100" >
-      Welcome
+<mat-card
+  appearance="outlined"
+  [class]="layout.responsive({
+    sm: 'sm-size-card',
+    md: 'md-size-card',
+    lg: 'lg-size-card'
+  })()"
+>
+  <mat-card-header class="header">
+    <mat-card-title>
+      <auth-logo-header text="Welcome" />
      </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -33,6 +39,6 @@
           <mat-icon>login</mat-icon>
           Login
         </button>
-        <a mat-button class="flex align-items-center">Create an account</a>
+        <a mat-button class="flex align-items-center" routerLink="/auth/sign-up">Create an account</a>
   </mat-card-actions>
 </mat-card>

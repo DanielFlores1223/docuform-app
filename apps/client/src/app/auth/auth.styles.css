@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.sm-size-card {
+  width: 100%;
+}
+
+.md-size-card {
+  width: 400px
+}
+
+.lg-size-card {
+  width: 500px;
+}

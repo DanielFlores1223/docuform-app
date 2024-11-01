@@ -3,7 +3,7 @@ import { ResponsiveService } from '../../../material/services/responsive.service
 
 @Component({
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css',
+  styleUrl: '../../auth.styles.css'
 })
 export class LoginPageComponent {
   public layout = inject(ResponsiveService);

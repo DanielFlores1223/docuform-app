@@ -6,13 +6,14 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { MaterialModule } from '../material/material.module';
-
+import { LogoHeaderComponent } from './components/logo-header/logo-header.component';
 
 @NgModule({
   declarations: [
     AuthLayoutComponent,
     LoginPageComponent,
     SignupPageComponent,
+    LogoHeaderComponent,
   ],
   imports: [
     CommonModule,
