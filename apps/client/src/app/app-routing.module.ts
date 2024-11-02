@@ -4,16 +4,23 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'my-forms',
+    loadChildren: () =>
+      import('./dynamic-form/dynamic-form.module').then(
+        (m) => m.DynamicFormModule,
+      ),
   },
   {
     path: '**',
-    redirectTo: 'auth'
-  }
+    redirectTo: 'my-forms',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
