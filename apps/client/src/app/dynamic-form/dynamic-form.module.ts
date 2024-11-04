@@ -6,6 +6,7 @@ import { DynamicFormLayoutComponent } from './layouts/dynamic-form-layout/dynami
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { MaterialModule } from '../material/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,11 @@ import { MaterialModule } from '../material/material.module';
     CreatePageComponent,
     ListPageComponent,
   ],
-  imports: [CommonModule, DynamicFormRoutingModule, MaterialModule],
+  imports: [
+    CommonModule,
+    DynamicFormRoutingModule,
+    MaterialModule,
+    SharedModule
+  ],
 })
 export class DynamicFormModule {}
