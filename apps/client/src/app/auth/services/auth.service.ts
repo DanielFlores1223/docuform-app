@@ -25,7 +25,7 @@ export class AuthService {
     .pipe(
       tap((response) =>  {
         if(!response.result) return;
-        this.setAuthentication(response.result?.token);
+        this.setAuthentication(response.result!.token);
       })
     );
   }

@@ -15,22 +15,26 @@
      </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form  [formGroup]="signUpForm" (submit)="onSubmit()">
       <div class="form-grid">
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput>
+          <input matInput formControlName="name">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput>
+          <input matInput formControlName="email">
         </mat-form-field>
       </div>
 
       <mat-form-field>
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide() ? 'password' : 'text'" />
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          formControlName="password"
+        />
         <button
           mat-icon-button
           matSuffix
