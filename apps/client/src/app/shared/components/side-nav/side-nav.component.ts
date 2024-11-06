@@ -1,7 +1,8 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ResponsiveService } from '../../../material/services/responsive.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthService } from '../../../auth/services/auth.service';
 
 interface LinksNav {
   name: string;
@@ -14,9 +15,10 @@ interface LinksNav {
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'
 })
-export class SideNavComponent {
+export class SideNavComponent implements OnInit {
   public layout = inject(ResponsiveService);
   public router = inject(Router);
+  private authService = inject(AuthService);
 
   @ViewChild('snav')
   public snav!: MatSidenav;
@@ -34,6 +36,13 @@ export class SideNavComponent {
     }
   ];
 
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd)
+        this.saveRoute();
+    });
+  }
+
   public toggleNav() {
     this.snav.toggle();
   }
@@ -42,6 +51,10 @@ export class SideNavComponent {
     if(this.snav && !this.layout.smallWidth()) return;
 
       this.toggleNav();
+  }
+
+  public saveRoute() {
+    this.authService.urlStore = this.router.url;
   }
 
 
