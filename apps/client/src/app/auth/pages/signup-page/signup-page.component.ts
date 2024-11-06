@@ -47,4 +47,8 @@ export class SignupPageComponent {
     });
 
   }
+
+  public getFormErrors(field: keyof IRegisterUserPayload) {
+    return this.signUpForm.get(field)?.errors
+  }
 }
