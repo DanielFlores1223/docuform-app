@@ -19,17 +19,23 @@ export class SignupPageComponent {
   public router = inject (Router);
 
   public signUpForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.maxLength(100)]],
-    name: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
+    name: ['', [Validators.required, Validators.maxLength(100)]],
+    email: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
     password: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(6), Validators.pattern( /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)]]
   });
 
   public clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
+    event.preventDefault();
   }
 
   public onSubmit() {
+    if(this.signUpForm.invalid) {
+      this.signUpForm.markAllAsTouched();
+      return;
+    }
+
     const payload = this.signUpForm.value as IRegisterUserPayload;
 
     this.authService.signup(payload).subscribe({

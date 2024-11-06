@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
+import { FormErrorsDirective } from './directives/form-errors.directive';
 
 
 
 @NgModule({
   declarations: [
-    SideNavComponent
+    SideNavComponent,
+    FormErrorsDirective
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   exports: [
-    SideNavComponent
+    SideNavComponent,
+    FormErrorsDirective
   ]
 })
 export class SharedModule { }

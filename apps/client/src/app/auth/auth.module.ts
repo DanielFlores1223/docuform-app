@@ -8,6 +8,7 @@ import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { MaterialModule } from '../material/material.module';
 import { LogoHeaderComponent } from './components/logo-header/logo-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
 })
 export class AuthModule { }
