@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IRegisterUserPayload } from 'global-interfaces';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AlertsService } from '../../../shared/services/alerts.service';
 
 
 
@@ -14,11 +15,13 @@ import { Router } from '@angular/router';
 export class SignupPageComponent {
   public hide = signal(true);
   public layout = inject(ResponsiveService);
-  public fb = inject(FormBuilder);
-  public authService = inject(AuthService);
-  public router = inject (Router);
+  private _fb = inject(FormBuilder);
+  private _authService = inject(AuthService);
+  private _router = inject (Router);
+  private _alertService = inject(AlertsService);
 
-  public signUpForm: FormGroup = this.fb.group({
+
+  public signUpForm: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.maxLength(100)]],
     email: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
     password: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(6), Validators.pattern( /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/)]]
@@ -38,12 +41,9 @@ export class SignupPageComponent {
 
     const payload = this.signUpForm.value as IRegisterUserPayload;
 
-    this.authService.signup(payload).subscribe({
-      next: () => this.router.navigateByUrl('/my-forms'),
-      error: (err) => {
-        // TODO: implement some solution
-        console.log(err);
-      }
+    this._authService.signup(payload).subscribe({
+      next: () => this._router.navigateByUrl('/my-forms'),
+      error: (err) => this._alertService.errorApi(err)
     });
 
   }

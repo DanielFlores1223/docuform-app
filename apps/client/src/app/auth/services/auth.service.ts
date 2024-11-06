@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { IApiResponse, IRegisterUserPayload, ITokenResponse } from 'global-interfaces';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, catchError, of, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthStatus } from '../interfaces';
 
@@ -48,7 +48,8 @@ export class AuthService {
       tap((response) =>  {
         if(!response.result) return;
         this.setAuthentication(response.result!.token);
-      })
+      }),
+      catchError(({ error }) => throwError(() => error as IApiResponse<null>))
     );
   }
 
