@@ -14,7 +14,7 @@
             *ngFor="let link of links"
             [routerLink]="link.path"
             [activated]="router.url === link.path"
-            (click)="closeSmallDevice(); saveRoute();"
+            (click)="closeSmallDevice(); saveRoute(); link.onClick()"
           >
             <div class="link">
               <mat-icon [fontIcon]="link.iconoName"></mat-icon>

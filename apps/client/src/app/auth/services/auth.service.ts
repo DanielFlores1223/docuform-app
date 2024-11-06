@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { IApiResponse, IRegisterUserPayload, ITokenResponse } from 'global-interfaces';
+import { IApiResponse, ILoginPayload, IRegisterUserPayload, ITokenResponse } from 'global-interfaces';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthStatus } from '../interfaces';
@@ -43,7 +43,9 @@ export class AuthService {
   }
 
   signup(payload: IRegisterUserPayload): Observable<IApiResponse<ITokenResponse>> {
-    return this._http.post<IApiResponse<ITokenResponse>>(`${this._baseUrl}/${this._urlModule}/register`, payload)
+    const endpoint = `${this._baseUrl}/${this._urlModule}/register`;
+
+    return this._http.post<IApiResponse<ITokenResponse>>(endpoint, payload)
     .pipe(
       tap((response) =>  {
         if(!response.result) return;
@@ -51,6 +53,21 @@ export class AuthService {
       }),
       catchError(({ error }) => throwError(() => error as IApiResponse<null>))
     );
+  }
+
+  login(payload: ILoginPayload): Observable<IApiResponse<ITokenResponse>> {
+    const endpoint = `${this._baseUrl}/${this._urlModule}/login`;
+
+    return this._http.post<IApiResponse<ITokenResponse>>(endpoint, payload)
+    .pipe(
+      tap(
+        (response) =>  {
+          if(!response.result) return;
+          this.setAuthentication(response.result!.token);
+        }
+      ),
+      catchError(({ error }) => throwError(() => error as IApiResponse<null>))
+    )
   }
 
   checkAuthStatus(): Observable<boolean> {
@@ -63,6 +80,11 @@ export class AuthService {
 
     this._authStatus.set(AuthStatus.authenticated);
     return of(true);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this._authStatus.set(AuthStatus.notAuthenticated);
   }
 
 }

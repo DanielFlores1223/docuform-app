@@ -14,8 +14,7 @@ export class AlertsService {
     if(!messageIsArray) {
       Swal.fire({
         icon: 'error',
-        title: error,
-        text: message
+        title: message,
       });
 
       return;

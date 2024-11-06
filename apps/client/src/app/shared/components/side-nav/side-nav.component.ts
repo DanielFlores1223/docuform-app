@@ -8,6 +8,7 @@ interface LinksNav {
   name: string;
   path: string;
   iconoName: string;
+  onClick: () => void
 }
 
 @Component({
@@ -27,12 +28,21 @@ export class SideNavComponent implements OnInit {
     {
       path: '/my-forms/create',
       iconoName: 'note_add',
-      name: 'Create a new form'
+      name: 'Create a new form',
+      onClick: () => {}
     },
     {
       path: '/my-forms/list',
       iconoName: 'view_list',
-      name: 'My forms'
+      name: 'My forms',
+      onClick: () => {}
+
+    },
+    {
+      path: '/auth',
+      iconoName: 'logout',
+      name: 'Logout',
+      onClick: this.authService.logout
     }
   ];
 
