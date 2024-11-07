@@ -8,7 +8,7 @@ interface LinksNav {
   name: string;
   path: string;
   iconoName: string;
-  onClick: () => void
+  uniqueName?: string
 }
 
 @Component({
@@ -29,20 +29,18 @@ export class SideNavComponent implements OnInit {
       path: '/my-forms/create',
       iconoName: 'note_add',
       name: 'Create a new form',
-      onClick: () => {}
     },
     {
       path: '/my-forms/list',
       iconoName: 'view_list',
       name: 'My forms',
-      onClick: () => {}
 
     },
     {
       path: '/auth',
       iconoName: 'logout',
       name: 'Logout',
-      onClick: this.authService.logout
+      uniqueName: 'logout'
     }
   ];
 
@@ -67,6 +65,11 @@ export class SideNavComponent implements OnInit {
     this.authService.urlStore = this.router.url;
   }
 
+  public onClickNav(uniqueName?: string) {
+    this.closeSmallDevice(); 
+    this.saveRoute(); 
 
+    if(uniqueName && uniqueName === 'logout') this.authService.logout();
+  }
 
 }
