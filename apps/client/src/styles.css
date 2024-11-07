@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* GLOBAL STYLES */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -7,6 +8,16 @@ mat-form-field {
   width: 100%;
 }
 
+/* UTILITIES */
 .w-100 {
   width: 100%;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+/* MATERIAL */
+.mat-grid-tile.create-form-content .mat-grid-tile-content {
+  align-items: start;
 }
