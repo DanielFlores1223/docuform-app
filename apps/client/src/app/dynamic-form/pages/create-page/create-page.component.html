@@ -1,12 +1,18 @@
-<mat-grid-list cols="4"  [rowHeight]="innerHeight() !== null && innerHeight()! < 670 ? '1:10' : '100vh'">
+<mat-grid-list
+  cols="4"
+  [rowHeight]="rowHeightScreen()"
+>
     <mat-grid-tile
       [colspan]="layout.responsive({ sm: 4, md: 3 })()"
       rowspan="1"
       class="create-form-content"
     >
-        <form class="grow-1" [style]="layout.responsive({ sm: '', md: 'padding: 0 2rem;' })()">
-            <h6>Create new form   {{ innerHeight() }}
-              {{ divPx() }} </h6>
+        <form
+          class="grow-1"
+          [style]="layout.responsive({ sm: '', md: 'padding: 0 2rem;' })()"
+        >
+            <h6>Create new form</h6>
+
             <mat-form-field>
                 <mat-label>Form name</mat-label>
                 <input matInput>
@@ -19,126 +25,50 @@
 
             <mat-divider [textContent]="'Add form field'"></mat-divider>
 
-            <mat-form-field class="w-100">
-                <mat-label>Field name</mat-label>
-                <input matInput>
-            </mat-form-field>
+            <mat-grid-list cols="2" rowHeight="76px" [gutterSize]="'10px'">
+              <mat-grid-tile
+                [colspan]="layout.responsive({ sm: 2, md: 1 })()"
+                rowspan="1"
+              >
+                <mat-form-field>
+                  <mat-label>Field name</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </mat-grid-tile>
 
-            <mat-form-field class="w-100">
-                <mat-label>Separator</mat-label>
-                <input matInput>
-            </mat-form-field>
+              <mat-grid-tile
+                [colspan]="layout.responsive({ sm: 2, md: 1 })()"
+                rowspan="1"
+              >
+                <mat-form-field>
+                    <mat-label>Separator</mat-label>
+                    <input matInput>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
 
-            <div>
-                <label>Type: </label>
-                <mat-radio-group>
-                    <mat-radio-button value="Text">Text</mat-radio-button>
-                    <mat-radio-button value="Number">Number</mat-radio-button>
-                </mat-radio-group>
-            </div>
+            <mat-grid-list cols="1" rowHeight="76px">
+              <mat-grid-tile
+                [colspan]="layout.responsive({ sm: 1, md: 1 })()"
+                rowspan="1"
+              >
+                <div>
+                  <label>Type: </label>
+                  <mat-radio-group>
+                      <mat-radio-button value="Text">Text</mat-radio-button>
+                      <mat-radio-button value="Number">Number</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
 
-            <div class="cards-container" [style]="'max-height: ' + divPx() + 'px'">
+            <mat-divider [textContent]="'Form fields'" ></mat-divider>
+
+            <div
+              class="cards-container"
+              [style]="maxHeighFieldsDiv()"
+            >
               <mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-
-              <mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
-                <mat-card-content class="card-field--content">
-                  Field Name Added
-
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-
-                    <button mat-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-content>
-              </mat-card><mat-card appearance="outlined" class="card-field">
                 <mat-card-content class="card-field--content">
                   Field Name Added
 
@@ -155,10 +85,14 @@
               </mat-card>
           </div>
 
-          <div style="margin-top: 50px;">
-            <button mat-flat-button extended class="w-100" type="submit">
-              <mat-icon>login</mat-icon>
-              Login
+          <div class="div-save">
+            <button
+              mat-flat-button extended
+              type="submit"
+              [class]="layout.responsive({ sm: 'w-100', md: '' })()"
+            >
+              <mat-icon>save</mat-icon>
+              Save
             </button>
           </div>
         </form>

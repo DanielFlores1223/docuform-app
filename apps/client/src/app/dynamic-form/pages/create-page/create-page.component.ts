@@ -9,10 +9,25 @@ import { ResponsiveService } from '../../../material/services/responsive.service
 export class CreatePageComponent implements AfterViewInit {
   public layout = inject(ResponsiveService);
   public innerHeight = signal<number | null>(null);
-  public divPx = computed(() => {
+  public maxHeighFieldsDiv = computed(() => {
     if(!this.innerHeight()) return 0;
 
-    return this.innerHeight()! * 0.2;
+    const px = this.innerHeight()! * 0.3; // 20%
+
+    return `max-height: ${px}px`;
+  });
+  public rowHeightScreen = computed(() => {
+    if(!this.innerHeight() || ( this.innerHeight()! && this.innerHeight()! > 800 ))
+        return '100vh'
+
+    let screenPorcentagePx: number = this.innerHeight()! * 0.2;
+
+    if(this.innerHeight()! <= 640)
+      screenPorcentagePx = this.innerHeight()! * 0.3;
+
+    const totalPxScreen = this.innerHeight()! + screenPorcentagePx;
+
+    return `${totalPxScreen}px`
   });
 
   ngAfterViewInit(): void {
@@ -23,12 +38,6 @@ export class CreatePageComponent implements AfterViewInit {
   onResize(event: Event) {
     const innerHeight = (event.target as Window).innerHeight;
     this.innerHeight.set(innerHeight);
-  }
-
-  public setHeightPx() {
-    if(!this.innerHeight()) return;
-
-
   }
 
 }
