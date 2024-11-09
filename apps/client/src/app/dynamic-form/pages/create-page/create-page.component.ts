@@ -12,17 +12,18 @@ export class CreatePageComponent implements AfterViewInit {
   public maxHeighFieldsDiv = computed(() => {
     if(!this.innerHeight()) return 0;
 
-    const px = this.innerHeight()! * 0.3; // 20%
+    const px = this.innerHeight()! * 0.3;
 
     return `max-height: ${px}px`;
   });
+
   public rowHeightScreen = computed(() => {
-    if(!this.innerHeight() || ( this.innerHeight()! && this.innerHeight()! > 800 ))
+    if(!this.innerHeight() || ( this.innerHeight()! && this.innerHeight()! > this.layout.MEDIUM_HEIGHT ))
         return '100vh'
 
     let screenPorcentagePx: number = this.innerHeight()! * 0.2;
 
-    if(this.innerHeight()! <= 640)
+    if(this.innerHeight()! <= this.layout.SMALL_HEIGHT)
       screenPorcentagePx = this.innerHeight()! * 0.3;
 
     const totalPxScreen = this.innerHeight()! + screenPorcentagePx;

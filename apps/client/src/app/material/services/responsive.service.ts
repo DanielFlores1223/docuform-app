@@ -18,6 +18,10 @@ export class ResponsiveService {
   private readonly medium = Breakpoints.Medium;
   private readonly large = Breakpoints.Large;
   private readonly xlarge = Breakpoints.XLarge;
+  public readonly SMALL_HEIGHT = 640;
+  public readonly MEDIUM_HEIGHT = 800;
+  public readonly ROW_HEIGHT_INPUT_PX = '75px';
+  public readonly GUTTER_SIZE_INPUT_PX = '10px';
 
   private screenWidth = toSignal(this.breakpointObserver.observe([this.xsmall, this.small, this.medium, this.large, this.xlarge]));
   public smallWidth = computed(() => this.screenWidth()?.breakpoints[this.small] || this.screenWidth()?.breakpoints[this.xsmall]);

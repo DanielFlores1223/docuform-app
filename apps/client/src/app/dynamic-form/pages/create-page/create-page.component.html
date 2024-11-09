@@ -25,7 +25,11 @@
 
             <mat-divider [textContent]="'Add form field'"></mat-divider>
 
-            <mat-grid-list cols="2" rowHeight="76px" [gutterSize]="'10px'">
+            <mat-grid-list 
+              cols="2" 
+              [rowHeight]="layout.ROW_HEIGHT_INPUT_PX" 
+              [gutterSize]="layout.GUTTER_SIZE_INPUT_PX"
+            >
               <mat-grid-tile
                 [colspan]="layout.responsive({ sm: 2, md: 1 })()"
                 rowspan="1"
@@ -47,7 +51,10 @@
               </mat-grid-tile>
             </mat-grid-list>
 
-            <mat-grid-list cols="1" rowHeight="76px">
+            <mat-grid-list 
+              cols="1" 
+              [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
+            >
               <mat-grid-tile
                 [colspan]="layout.responsive({ sm: 1, md: 1 })()"
                 rowspan="1"
