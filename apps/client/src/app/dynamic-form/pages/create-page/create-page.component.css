@@ -21,3 +21,56 @@ mat-divider  {
   display: flex;
   justify-content: end;
 }
+
+/* PREVIEW */
+
+.preview-container {
+  /* Global scale to reduce the size of the entire container */
+  transform: scale(0.5); /* Adjust this value to set the preview size */
+  transform-origin: top center; /* Aligns the scale to the top center */
+  width: 100%;
+  max-height: 100vh;
+  overflow: hidden auto; /* Hides any overflow from the scaled content */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.preview-container:hover {
+  transform: scale(0.7);
+  z-index: 10;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.preview-container:hover .mat-form-field,
+.preview-container:hover mat-label,
+.preview-container:hover mat-input-element {
+  /* Opcional: Reduce levemente el tamaño de fuente para que se vea más delicado */
+  font-size: 0.9em;
+}
+
+.preview-container mat-form-field {
+  /* Adjustments to make the layout more compact */
+  font-size: 0.85rem; /* Reduces font size of the inputs */
+  margin: 4px 0; /* Reduces top and bottom margins */
+}
+
+.preview-container .mat-form-field-infix {
+  padding: 0 8px; /* Adjusts input padding for a more compact view */
+}
+
+.preview-container mat-label {
+  font-size: 0.75rem; /* Reduces label font size */
+}
+
+.preview-container mat-input-element {
+  font-size: 0.85rem; /* Reduces font size of the input text */
+}
+
+.preview-container mat-icon {
+  font-size: 16px; /* Smaller size for icons */
+}
+

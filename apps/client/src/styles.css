@@ -21,3 +21,10 @@ mat-form-field {
 .mat-grid-tile.create-form-content .mat-grid-tile-content {
   align-items: start;
 }
+
+.mat-grid-tile.preview-container .mat-grid-tile-content {
+  flex-direction: row;
+  align-items: start;
+  justify-content: flex-start;
+  padding: 0.5rem;
+}

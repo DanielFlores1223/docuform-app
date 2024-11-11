@@ -1,9 +1,9 @@
 <mat-grid-list
-  cols="4"
+  cols="12"
   [rowHeight]="rowHeightScreen()"
 >
     <mat-grid-tile
-      [colspan]="layout.responsive({ sm: 4, md: 3 })()"
+      [colspan]="layout.responsive({ sm: 12, md: 8 })()"
       rowspan="1"
       class="create-form-content"
     >
@@ -107,10 +107,34 @@
 
     <mat-grid-tile
       *ngIf="!layout.smallWidth()"
-      [colspan]="layout.responsive({ sm: 4, md: 1 })()"
+      [colspan]="layout.responsive({ sm: 12, md: 4 })()"
       rowspan="1"
+      class="preview-container"
     >
-        <p>preview???</p>
+      <mat-grid-list 
+        cols="1" 
+        [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
+        class="grow-1"
+      >
+        <mat-grid-tile
+          [colspan]="layout.responsive({ sm: 1 })()"
+          rowspan="1"
+        >
+          <h6>Preview</h6>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [colspan]="layout.responsive({ sm: 1 })()"
+          rowspan="1"
+          *ngFor="let field of formFields"
+        >
+          <mat-form-field>
+            <mat-label>{{ field.name }}</mat-label>
+            <input matInput [type]="field.idFieldType === 1 ? 'text' : 'number'">
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
     </mat-grid-tile>
+
 
 </mat-grid-list>
