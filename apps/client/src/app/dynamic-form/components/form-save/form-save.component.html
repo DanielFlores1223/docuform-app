@@ -1,24 +1,38 @@
 <form
+    [formGroup]="dynamicForm"
     [style]="layout.responsive({ sm: '', md: 'padding: 0 2rem;' })()"
 >
     <h6>Create new form</h6>
 
     <mat-form-field>
         <mat-label>Form name</mat-label>
-        <input matInput>
+        <input matInput formControlName="name">
+        <mat-error
+          formErrors
+          [errors]="getFormErrors('name')"
+        />
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput formControlName="description"></textarea>
+        <mat-error
+          formErrors
+          [errors]="getFormErrors('description')"
+        />
     </mat-form-field>
 
     <mat-divider [textContent]="'Add form field'"></mat-divider>
 
-    <mat-grid-list 
-        cols="2" 
-        [rowHeight]="layout.ROW_HEIGHT_INPUT_PX" 
+    <div>
+
+
+    </div>
+    <mat-grid-list
+        cols="2"
+        [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
         [gutterSize]="layout.GUTTER_SIZE_INPUT_PX"
+        formGroupName="field"
     >
         <mat-grid-tile
             [colspan]="layout.responsive({ sm: 2, md: 1 })()"
@@ -26,7 +40,12 @@
         >
             <mat-form-field>
                 <mat-label>Field name</mat-label>
-                <input matInput>
+                <input matInput formControlName="name">
+
+                <mat-error
+                  formErrors
+                  [errors]="getFormErrorsField('name')"
+                />
             </mat-form-field>
         </mat-grid-tile>
 
@@ -36,14 +55,19 @@
         >
             <mat-form-field>
                 <mat-label>Separator</mat-label>
-                <input matInput>
+                <input matInput formControlName="scannedDocumentSeparator">
+                <mat-error
+                  formErrors
+                  [errors]="getFormErrorsField('scannedDocumentSeparator')"
+                />
             </mat-form-field>
         </mat-grid-tile>
     </mat-grid-list>
 
-    <mat-grid-list 
-        cols="1" 
+    <mat-grid-list
+        cols="1"
         [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
+        formGroupName="field"
     >
         <mat-grid-tile
             [colspan]="layout.responsive({ sm: 1, md: 1 })()"
@@ -51,13 +75,30 @@
         >
             <div>
                 <label>Type: </label>
-                <mat-radio-group>
-                    <mat-radio-button value="Text">Text</mat-radio-button>
-                    <mat-radio-button value="Number">Number</mat-radio-button>
+                <mat-radio-group formControlName="idFieldType">
+                    <mat-radio-button [value]="1">Text</mat-radio-button>
+                    <mat-radio-button [value]="2">Number</mat-radio-button>
+                    <mat-error
+                      formErrors
+                      [errors]="getFormErrorsField('idFieldType')"
+                    />
                 </mat-radio-group>
+
             </div>
         </mat-grid-tile>
     </mat-grid-list>
+
+    <div class="div-add-field">
+      <button
+          mat-flat-button extended
+          type="button"
+          (click)="onAddField()"
+          [class]="layout.responsive({ sm: 'w-100', md: '' })()"
+      >
+          <mat-icon>add</mat-icon>
+          Add field
+      </button>
+    </div>
 
     <mat-divider [textContent]="'Form fields'" ></mat-divider>
 

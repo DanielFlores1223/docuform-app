@@ -7,3 +7,9 @@ mat-divider  {
   display: flex;
   justify-content: end;
 }
+
+.div-add-field {
+  height: 50px;
+  display: flex;
+  justify-content: end;
+}

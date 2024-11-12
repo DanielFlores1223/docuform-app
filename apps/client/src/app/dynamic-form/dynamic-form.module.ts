@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PreviewComponent } from './components/preview/preview.component';
 import { FormSaveComponent } from './components/form-save/form-save.component';
 import { FieldsCardsComponent } from './components/fields-cards/fields-cards.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FieldsCardsComponent } from './components/fields-cards/fields-cards.com
     DynamicFormRoutingModule,
     MaterialModule,
     SharedModule,
+    ReactiveFormsModule
   ],
 })
 export class DynamicFormModule {}
