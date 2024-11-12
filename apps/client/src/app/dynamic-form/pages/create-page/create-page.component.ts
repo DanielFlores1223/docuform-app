@@ -8,24 +8,18 @@ import {
   signal,
 } from '@angular/core';
 import { ResponsiveService } from '../../../material/services/responsive.service';
-import { FormFieldsPayload } from 'global-interfaces';
 
 @Component({
   selector: 'dynamic-form-create',
   templateUrl: './create-page.component.html',
-  styleUrl: './create-page.component.css',
+  styleUrls: [
+    './create-page.component.css',
+    '../../components/preview/preview.component.css',
+  ],
 })
 export class CreatePageComponent implements AfterViewInit {
   public layout = inject(ResponsiveService);
   public innerHeight = signal<number | null>(null);
-  public maxHeighFieldsDiv = computed((): string => {
-    if (!this.innerHeight()) return 'max-height: 100vh';
-
-    const px = this.innerHeight()! * 0.3;
-
-    return `max-height: ${px}px`;
-  });
-
   public rowHeightScreen = computed(() => {
     if (
       !this.innerHeight() ||
@@ -42,24 +36,6 @@ export class CreatePageComponent implements AfterViewInit {
 
     return `${totalPxScreen}px`;
   });
-
-  public formFields: FormFieldsPayload[] = [
-    {
-      name: 'form1',
-      idFieldType: 1,
-      scannedDocumentSeparator: '1',
-    },
-    {
-      name: 'form2',
-      idFieldType: 2,
-      scannedDocumentSeparator: '2',
-    },
-    {
-      name: 'form3',
-      idFieldType: 1,
-      scannedDocumentSeparator: '3',
-    },
-  ];
 
   ngAfterViewInit(): void {
     this.innerHeight.set(window.innerHeight);

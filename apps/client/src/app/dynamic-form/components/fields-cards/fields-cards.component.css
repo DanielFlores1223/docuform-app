@@ -1,0 +1,14 @@
+.cards-container {
+    overflow: auto;
+    height: auto;
+  }
+  
+.card-field {
+    margin-bottom: 1rem;
+}
+
+.card-field--content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,22 @@
+<mat-grid-list 
+    cols="1" 
+    [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
+>
+    <mat-grid-tile
+        [colspan]="layout.responsive({ sm: 1 })()"
+        rowspan="1"
+    >
+        <h6>Preview</h6>
+    </mat-grid-tile>
+
+    <mat-grid-tile
+        [colspan]="layout.responsive({ sm: 1 })()"
+        rowspan="1"
+        *ngFor="let field of formFields"
+    >
+        <mat-form-field>
+            <mat-label>{{ field.name }}</mat-label>
+            <input matInput [type]="field.idFieldType === 1 ? 'text' : 'number'">
+        </mat-form-field>
+    </mat-grid-tile>
+</mat-grid-list>

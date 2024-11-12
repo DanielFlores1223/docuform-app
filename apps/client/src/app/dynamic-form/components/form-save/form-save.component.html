@@ -1,0 +1,76 @@
+<form
+    [style]="layout.responsive({ sm: '', md: 'padding: 0 2rem;' })()"
+>
+    <h6>Create new form</h6>
+
+    <mat-form-field>
+        <mat-label>Form name</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+
+    <mat-divider [textContent]="'Add form field'"></mat-divider>
+
+    <mat-grid-list 
+        cols="2" 
+        [rowHeight]="layout.ROW_HEIGHT_INPUT_PX" 
+        [gutterSize]="layout.GUTTER_SIZE_INPUT_PX"
+    >
+        <mat-grid-tile
+            [colspan]="layout.responsive({ sm: 2, md: 1 })()"
+            rowspan="1"
+        >
+            <mat-form-field>
+                <mat-label>Field name</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+            [colspan]="layout.responsive({ sm: 2, md: 1 })()"
+            rowspan="1"
+        >
+            <mat-form-field>
+                <mat-label>Separator</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list 
+        cols="1" 
+        [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
+    >
+        <mat-grid-tile
+            [colspan]="layout.responsive({ sm: 1, md: 1 })()"
+            rowspan="1"
+        >
+            <div>
+                <label>Type: </label>
+                <mat-radio-group>
+                    <mat-radio-button value="Text">Text</mat-radio-button>
+                    <mat-radio-button value="Number">Number</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider [textContent]="'Form fields'" ></mat-divider>
+
+    <dynamic-form-fields-cards [innerHeight]="innerHeight()" />
+
+    <div class="div-save">
+        <button
+            mat-flat-button extended
+            type="submit"
+            [class]="layout.responsive({ sm: 'w-100', md: '' })()"
+        >
+            <mat-icon>save</mat-icon>
+            Save
+        </button>
+    </div>
+</form>
