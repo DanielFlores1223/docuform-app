@@ -1,5 +1,5 @@
-<mat-grid-list 
-    cols="1" 
+<mat-grid-list
+    cols="1"
     [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
 >
     <mat-grid-tile
@@ -12,7 +12,7 @@
     <mat-grid-tile
         [colspan]="layout.responsive({ sm: 1 })()"
         rowspan="1"
-        *ngFor="let field of formFields"
+        *ngFor="let field of formFieldsArray"
     >
         <mat-form-field>
             <mat-label>{{ field.name }}</mat-label>

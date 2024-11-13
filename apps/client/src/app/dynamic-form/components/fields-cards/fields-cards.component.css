@@ -2,7 +2,7 @@
     overflow: auto;
     height: auto;
   }
-  
+
 .card-field {
     margin-bottom: 1rem;
 }
@@ -11,4 +11,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.empty {
+  text-align: center;
+  color: gray;
+  font-size: small;
 }

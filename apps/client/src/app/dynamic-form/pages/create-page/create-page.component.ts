@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { ResponsiveService } from '../../../material/services/responsive.service';
+import { FormFieldsPayload } from 'global-interfaces';
 
 @Component({
   selector: 'dynamic-form-create',
@@ -20,6 +21,7 @@ import { ResponsiveService } from '../../../material/services/responsive.service
 export class CreatePageComponent implements AfterViewInit {
   public layout = inject(ResponsiveService);
   public innerHeight = signal<number | null>(null);
+  public formFieldsArray: FormFieldsPayload[] = [];
   public rowHeightScreen = computed(() => {
     if (
       !this.innerHeight() ||
@@ -45,5 +47,9 @@ export class CreatePageComponent implements AfterViewInit {
   onResize(event: Event) {
     const innerHeight = (event.target as Window).innerHeight;
     this.innerHeight.set(innerHeight);
+  }
+
+  public onFormFieldsPayload(formFields: FormFieldsPayload[]) {
+    this.formFieldsArray = [...formFields];
   }
 }

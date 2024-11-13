@@ -24,10 +24,6 @@
 
     <mat-divider [textContent]="'Add form field'"></mat-divider>
 
-    <div>
-
-
-    </div>
     <mat-grid-list
         cols="2"
         [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
@@ -40,7 +36,7 @@
         >
             <mat-form-field>
                 <mat-label>Field name</mat-label>
-                <input matInput formControlName="name">
+                <input #inputFieldName matInput formControlName="name">
 
                 <mat-error
                   formErrors
@@ -102,7 +98,7 @@
 
     <mat-divider [textContent]="'Form fields'" ></mat-divider>
 
-    <dynamic-form-fields-cards [innerHeight]="innerHeight()" />
+    <dynamic-form-fields-cards [innerHeight]="innerHeight()" [fieldsArray]="fieldsArray" />
 
     <div class="div-save">
         <button

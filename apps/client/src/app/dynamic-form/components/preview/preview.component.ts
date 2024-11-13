@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ResponsiveService } from '../../../material/services/responsive.service';
 import { FormFieldsPayload } from 'global-interfaces';
 
@@ -9,6 +9,8 @@ import { FormFieldsPayload } from 'global-interfaces';
 })
 export class PreviewComponent {
   public layout = inject(ResponsiveService);
+  @Input()
+  public formFieldsArray: FormFieldsPayload[] = [];
 
   public formFields: FormFieldsPayload[] = [
     {

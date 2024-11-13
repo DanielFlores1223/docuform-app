@@ -7,9 +7,10 @@
       rowspan="1"
       class="create-form-content"
     >
-      <dynamic-form-save 
-        [innerHeight]="innerHeight()" 
-        class="grow-1" 
+      <dynamic-form-save
+        [innerHeight]="innerHeight()"
+        class="grow-1"
+        (onFormFieldsPayload)="onFormFieldsPayload($event)"
       />
     </mat-grid-tile>
 
@@ -19,7 +20,10 @@
       rowspan="1"
       class="preview-container"
     >
-      <dynamic-form-preview class="grow-1" />
+      <dynamic-form-preview
+        class="grow-1"
+        [formFieldsArray]="formFieldsArray"
+      />
     </mat-grid-tile>
-    
+
 </mat-grid-list>

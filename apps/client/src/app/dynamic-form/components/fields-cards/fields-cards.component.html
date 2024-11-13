@@ -2,10 +2,20 @@
     class="cards-container"
     [style]="maxHeighFieldsDiv()"
 >
-    <mat-card appearance="outlined" class="card-field">
-        <mat-card-content class="card-field--content">
-            Field Name Added
+    <p
+      class="empty"
+      *ngIf="fieldsArray.length === 0"
+    >
+      Empty
+    </p>
 
+    <mat-card
+      appearance="outlined"
+      class="card-field"
+      *ngFor="let field of fieldsArray"
+    >
+        <mat-card-content class="card-field--content">
+            {{ formValue('name', field) }}
             <div>
             <button mat-icon-button>
                 <mat-icon>delete</mat-icon>
@@ -15,6 +25,6 @@
                 <mat-icon>edit</mat-icon>
             </button>
             </div>
-        </mat-card-content> 
+        </mat-card-content>
     </mat-card>
 </div>
