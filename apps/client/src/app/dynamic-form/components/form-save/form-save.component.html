@@ -1,5 +1,6 @@
 <form
     [formGroup]="dynamicForm"
+    (submit)="onSubmit()"
     [style]="layout.responsive({ sm: '', md: 'padding: 0 2rem;' })()"
 >
     <h6>Create new form</h6>
@@ -28,7 +29,7 @@
         cols="2"
         [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
         [gutterSize]="layout.GUTTER_SIZE_INPUT_PX"
-        formGroupName="field"
+        [formGroup]="fieldForm"
     >
         <mat-grid-tile
             [colspan]="layout.responsive({ sm: 2, md: 1 })()"
@@ -63,7 +64,7 @@
     <mat-grid-list
         cols="1"
         [rowHeight]="layout.ROW_HEIGHT_INPUT_PX"
-        formGroupName="field"
+        [formGroup]="fieldForm"
     >
         <mat-grid-tile
             [colspan]="layout.responsive({ sm: 1, md: 1 })()"

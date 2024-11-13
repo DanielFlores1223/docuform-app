@@ -69,13 +69,16 @@ export class DynamicFormService {
   private async validateConstraints(options: ValidateConstrainstsOptions): Promise<never | void> {
     const { formFieldsIds, uniqueNameUser } = options;
 
+    const uniqueFieldsIds = new Set();
+    formFieldsIds.forEach( f => uniqueFieldsIds.add(f) );
+
     // id_field_type
     const amountFormFields = await this.fieldTypeRepository.find({
       where: { id: In(formFieldsIds) },
       select: { id: true }
     });
 
-    if(amountFormFields.length !== formFieldsIds.length)
+    if(amountFormFields.length !== uniqueFieldsIds.size)
       throw new BadRequestException('One or more form fields could not be found')
 
     // unique constraint "unique_name_user"

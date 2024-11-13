@@ -3,6 +3,7 @@ import { ResponsiveService } from '../../../material/services/responsive.service
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormFieldsPayload, ICreateDynamicFormPayload } from 'global-interfaces';
 import { AlertsService } from '../../../shared/services/alerts.service';
+import { DynamicFormService } from '../../services/dynamic-form.service';
 
 @Component({
   selector: 'dynamic-form-save',
@@ -16,23 +17,21 @@ export class FormSaveComponent {
   public onFormFieldsPayload: EventEmitter<FormFieldsPayload[]> = new EventEmitter();
   public layout = inject(ResponsiveService);
   public innerHeight = input<number | null>(null);
-  private _fb = inject(FormBuilder);
-  private alertService = inject(AlertsService);
+  private readonly _fb = inject(FormBuilder);
+  private readonly _alertService = inject(AlertsService);
+  private readonly _dynamicFormService = inject(DynamicFormService);
 
   public dynamicForm: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.maxLength(100)] ],
     description: ['', [Validators.required, Validators.maxLength(255)]],
     fields: this._fb.array([]),
-    field: this._fb.group({
-      idFieldType: [1, [Validators.min(1)]],
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      scannedDocumentSeparator: ['', [Validators.required, Validators.maxLength(255)]]
-    }),
   });
 
-  get formFieldControl(): AbstractControl {
-    return this.dynamicForm.controls['field'];
-  }
+  public fieldForm = this._fb.group({
+    idFieldType: [1, [Validators.min(1)]],
+    name: ['', [Validators.required, Validators.maxLength(50)]],
+    scannedDocumentSeparator: ['', [Validators.required, Validators.maxLength(255)]]
+  });
 
   get fields(): FormArray {
     return this.dynamicForm.get('fields') as FormArray;
@@ -61,23 +60,24 @@ export class FormSaveComponent {
   }
 
   public getFormErrorsField(field: keyof FormFieldsPayload) {
-    return this.dynamicForm.get('field')?.get(field)?.errors;
+    return this.fieldForm.get(field)?.errors;
   }
 
   public async onAddField() {
-    if(this.formFieldControl.invalid) {
-      this.formFieldControl.markAllAsTouched();
+    if(this.fieldForm.invalid) {
+      this.fieldForm.markAllAsTouched();
       return;
     }
 
-    this.addField(this.formFieldControl.value);
-    this.formFieldControl.reset({
+    const fieldFormValue = this.fieldForm.value as FormFieldsPayload;
+    this.addField(fieldFormValue);
+    this.fieldForm.reset({
       idFieldType: 1
     });
 
     this.inputFieldName!.nativeElement.focus();
     this.emmitFormFieldsPayload();
-    await this.alertService.toastAlert({
+    await this._alertService.toastAlert({
       icon: 'success',
       title: 'Field was added'
     });
@@ -88,4 +88,25 @@ export class FormSaveComponent {
     this.onFormFieldsPayload.emit([...payload]);
   }
 
+  public onSubmit(): void {
+    this.fieldForm.markAsUntouched();
+
+    if(this.dynamicForm.invalid) {
+      this.dynamicForm.markAllAsTouched();
+      return;
+    }
+
+    const payload = this.dynamicForm.value as ICreateDynamicFormPayload;
+
+    this._dynamicFormService.create(payload).subscribe({
+      next: (response) => {
+        this._alertService.toastAlert({ icon: 'success', title: response.message });
+        this.dynamicForm.reset();
+        this.fields.clear();
+        this.emmitFormFieldsPayload();
+      },
+      error: (err) =>
+        this._alertService.errorApi(err)
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { IApiResponse, ILoginPayload, IRegisterUserPayload, ITokenResponse } from 'global-interfaces';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
@@ -18,6 +18,15 @@ export class AuthService {
 
   constructor() {
     this.checkAuthStatus().subscribe();
+  }
+
+  public getAuthorizationHeader() {
+    const token = this.tokenStore;
+
+    const headers = new HttpHeaders()
+      .set('Authorization', ` Bearer ${token}`);
+
+    return headers;
   }
 
   public set tokenStore(value: string) {

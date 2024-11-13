@@ -11,22 +11,4 @@ export class PreviewComponent {
   public layout = inject(ResponsiveService);
   @Input()
   public formFieldsArray: FormFieldsPayload[] = [];
-
-  public formFields: FormFieldsPayload[] = [
-    {
-      name: 'form1',
-      idFieldType: 1,
-      scannedDocumentSeparator: '1',
-    },
-    {
-      name: 'form2',
-      idFieldType: 2,
-      scannedDocumentSeparator: '2',
-    },
-    {
-      name: 'form3',
-      idFieldType: 1,
-      scannedDocumentSeparator: '3',
-    },
-  ];
 }

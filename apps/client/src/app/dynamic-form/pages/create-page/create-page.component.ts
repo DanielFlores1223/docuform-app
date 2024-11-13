@@ -50,6 +50,6 @@ export class CreatePageComponent implements AfterViewInit {
   }
 
   public onFormFieldsPayload(formFields: FormFieldsPayload[]) {
-    this.formFieldsArray = [...formFields];
+    this.formFieldsArray = formFields;
   }
 }
