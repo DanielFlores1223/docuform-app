@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { DynamicFormService } from './dynamic-form.service';
 import { CreateDynamicFormDto } from './dto/create-dynamic-form.dto';
 import { UpdateDynamicFormDto } from './dto/update-dynamic-form.dto';
@@ -7,6 +7,10 @@ import { ApiRestEndpointDescription, ApiRestResponse } from 'src/common/decorato
 import { Auth, GetUser } from 'src/auth/decorators';
 import { User } from 'src/auth/entities';
 import { ResponseController } from 'src/common/interfaces';
+import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
+import { FindAllDynamicFormDto } from './dto';
+import { GetDynamicFormsResponse } from 'src/common/responses/get-dynanic-forms.response';
+import { PaginationResponse } from 'src/common/responses';
 
 @Controller('dynamic-form')
 @ApiTags('dynamic-form')
@@ -36,9 +40,32 @@ export class DynamicFormController {
     }
   }
 
+  @Auth()
   @Get()
-  findAll() {
-    return this.dynamicFormService.findAll();
+  @ApiBearerAuth()
+  @ApiRestEndpointDescription({
+    summary: 'Get all dynamic form by user',
+    bodyInterface: '',
+    responseInterface: 'PaginationResponse<GetDynamicFormsResponse>'
+  })
+  @ApiRestResponse({
+    description: 'Ok',
+    pagination: true,
+    genericType: GetDynamicFormsResponse,
+  })
+  async findAll(
+    @GetUser() user: User,
+    @Query() params: FindAllDynamicFormDto,
+  ): Promise<ResponseController<IPaginationResponse<IGetDynamicFormsResponse>>> {
+    const result = this.dynamicFormService.findAll(params, user);
+
+    return {
+      message: 'success',
+      result: {
+        total: 0,
+        records: []
+      }
+    }
   }
 
   @Get(':id')

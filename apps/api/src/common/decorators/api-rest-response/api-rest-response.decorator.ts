@@ -1,16 +1,18 @@
-import { Type, applyDecorators } from '@nestjs/common';
+import { InternalServerErrorException, Type, applyDecorators } from '@nestjs/common';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { ReferenceObject, SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { ApiRestResponseModel } from 'src/common/responses';
+import { ApiRestResponseModel, PaginationResponse } from 'src/common/responses';
 
 interface Options <T> {
     genericType?: T,
     description?: string,
     array?: boolean
+    pagination?: boolean
 }
 
-export const ApiRestResponse = <GenericType extends Type<unknown>>(options: Options<GenericType>) => {
-    const { genericType, description = 'Ok', array } = options;
+export const ApiRestResponse = 
+    <GenericType extends Type<unknown>>(options: Options<GenericType>) => {
+    const { genericType, pagination, description = 'Ok', array } = options;
     
     if(!genericType)
         return applyDecorators(
@@ -23,6 +25,22 @@ export const ApiRestResponse = <GenericType extends Type<unknown>>(options: Opti
     let schema: SchemaObject & Partial<ReferenceObject> = {
         $ref: getSchemaPath(ApiRestResponseModel),
         properties: { result: { $ref: getSchemaPath(genericType) } }
+    }
+
+    if(pagination) {
+        schema = {
+            $ref: getSchemaPath(ApiRestResponseModel),
+            properties: { result: { 
+                    $ref: getSchemaPath(PaginationResponse),
+                    properties: {
+                        records: {
+                            type: 'array',
+                            items: { $ref: getSchemaPath(genericType) }
+                        }
+                    }
+                } 
+            }
+        }
     }
 
     if(array) { 
@@ -42,7 +60,7 @@ export const ApiRestResponse = <GenericType extends Type<unknown>>(options: Opti
     }
 
     return applyDecorators(
-        ApiExtraModels(ApiRestResponseModel, genericType),
+        ApiExtraModels(ApiRestResponseModel, PaginationResponse, genericType),
         ApiOkResponse({
             description,
             schema,
