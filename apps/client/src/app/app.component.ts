@@ -13,8 +13,6 @@ export class AppComponent {
   private router = inject(Router);
 
   public authStatusChangedEffect = effect(() => {
-    console.log(this.authService.authStatus())
-
     switch(this.authService.authStatus()) {
       case AuthStatus.checking:
         break;

@@ -70,6 +70,18 @@ export class FormSaveComponent {
     }
 
     const fieldFormValue = this.fieldForm.value as FormFieldsPayload;
+
+    const fieldExist = this.fields.controls.find(control => control.value.name === fieldFormValue.name);
+
+    if(fieldExist) {
+      this._alertService.toastAlert({
+        icon: 'error',
+        title: `the field ${fieldFormValue.name} already exists`
+      });
+
+      return;
+    }
+
     this.addField(fieldFormValue);
     this.fieldForm.reset({
       idFieldType: 1
@@ -109,4 +121,6 @@ export class FormSaveComponent {
         this._alertService.errorApi(err)
     });
   }
+
+
 }
