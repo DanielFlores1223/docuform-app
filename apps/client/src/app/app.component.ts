@@ -13,12 +13,18 @@ export class AppComponent {
   private router = inject(Router);
 
   public authStatusChangedEffect = effect(() => {
+    console.log(this.authService.authStatus())
+
     switch(this.authService.authStatus()) {
       case AuthStatus.checking:
         break;
 
       case AuthStatus.authenticated:
-        const url = this.authService.urlStore || '/my-forms';
+        const navigateTo = '/my-forms';
+        let url = this.authService.urlStore || navigateTo;
+
+        if(url === '/auth/login') url = navigateTo;
+
         this.router.navigateByUrl(url);
         break;
 
