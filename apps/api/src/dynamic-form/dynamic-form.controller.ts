@@ -57,13 +57,13 @@ export class DynamicFormController {
     @GetUser() user: User,
     @Query() params: FindAllDynamicFormDto,
   ): Promise<ResponseController<IPaginationResponse<IGetDynamicFormsResponse>>> {
-    const result = this.dynamicFormService.findAll(params, user);
+    const { total, records } = await this.dynamicFormService.findAll(params, user);
 
     return {
       message: 'success',
       result: {
-        total: 0,
-        records: []
+        total,
+        records
       }
     }
   }

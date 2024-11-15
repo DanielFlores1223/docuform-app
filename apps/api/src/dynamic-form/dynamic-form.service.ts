@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateDynamicFormDto } from './dto/create-dynamic-form.dto';
 import { UpdateDynamicFormDto } from './dto/update-dynamic-form.dto';
-import { ILike, In, Not, Repository } from 'typeorm';
+import { FindOptionsWhere, ILike, In, Not, Repository } from 'typeorm';
 import { DynamicForm, FieldType, FormField } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entities';
@@ -53,14 +53,20 @@ export class DynamicFormService {
   }
 
   async findAll(params: FindAllDynamicFormDto, user: User): Promise<IPaginationResponse<IGetDynamicFormsResponse>> {
+    const where: FindOptionsWhere<DynamicForm> = {
+      user: { id: user.id }
+    };
+
+    if(params.search) {
+      where.name = ILike(`%${params.search}%`);
+    }
+
     const [records, total] = await this.dynamicFormRepository.findAndCount({
-      select: { name: true, description: true }, 
-      where: { 
-        user: { id: user.id },  
-        name: ILike(`%${params.search}%`)
-      },
+      select: { id: true, name: true, description: true }, 
+      where: where,
       skip: params.offset,
-      take: params.limit
+      take: params.limit,
+      order: { id: 'DESC' }
     });
 
     return {
