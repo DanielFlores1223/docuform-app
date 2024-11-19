@@ -99,7 +99,11 @@
 
     <mat-divider [textContent]="'Form fields'" ></mat-divider>
 
-    <dynamic-form-fields-cards [innerHeight]="innerHeight()" [fieldsArray]="fieldsArray" />
+    <dynamic-form-fields-cards
+      [innerHeight]="innerHeight()"
+      [fieldsArray]="fieldsArray"
+      (indexDeleteField)=""
+    />
 
     <div class="div-save">
         <button

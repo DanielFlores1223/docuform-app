@@ -12,16 +12,24 @@
     <mat-card
       appearance="outlined"
       class="card-field"
-      *ngFor="let field of fieldsArray"
+      *ngFor="let field of fieldsArray; let i = index"
     >
         <mat-card-content class="card-field--content">
             {{ formValue('name', field) }}
             <div>
-            <button mat-icon-button>
+            <button
+              type="button"
+              mat-icon-button
+              (click)="onClickDelete(i)"
+            >
                 <mat-icon>delete</mat-icon>
             </button>
 
-            <button mat-icon-button>
+            <button
+              type="button"
+              mat-icon-button
+              (click)="onClickUpdate(i)"
+            >
                 <mat-icon>edit</mat-icon>
             </button>
             </div>

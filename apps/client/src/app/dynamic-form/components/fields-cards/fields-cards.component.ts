@@ -1,4 +1,4 @@
-import { Component, Input, computed, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed, input } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { FormFieldsPayload } from 'global-interfaces';
 
@@ -8,6 +8,10 @@ import { FormFieldsPayload } from 'global-interfaces';
   styleUrl: './fields-cards.component.css',
 })
 export class FieldsCardsComponent {
+  @Output()
+  public indexDeleteField: EventEmitter<number> = new EventEmitter();
+  @Output()
+  public indexEditField: EventEmitter<number> = new EventEmitter();
   @Input()
   public fieldsArray: FormControl[] = [];
   public innerHeight = input<number | null>(null);
@@ -22,4 +26,13 @@ export class FieldsCardsComponent {
   public formValue(name: keyof FormFieldsPayload, field: AbstractControl) {
     return field.value[name];
   }
+
+  onClickDelete(index: number) {
+    this.indexDeleteField.emit(index);
+  }
+
+  onClickUpdate(index: number) {
+    this.indexEditField.emit(index);
+  }
+
 }
