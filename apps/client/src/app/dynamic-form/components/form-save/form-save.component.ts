@@ -1,7 +1,26 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild, inject, input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  ViewChild,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { ResponsiveService } from '../../../material/services/responsive.service';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormFieldsPayload, ICreateDynamicFormPayload } from 'global-interfaces';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
+  FormFieldsPayload,
+  ICreateDynamicFormPayload,
+} from 'global-interfaces';
 import { AlertsService } from '../../../shared/services/alerts.service';
 import { DynamicFormService } from '../../services/dynamic-form.service';
 
@@ -14,15 +33,17 @@ export class FormSaveComponent {
   @ViewChild('inputFieldName')
   public inputFieldName?: ElementRef<HTMLInputElement>;
   @Output()
-  public onFormFieldsPayload: EventEmitter<FormFieldsPayload[]> = new EventEmitter();
+  public onFormFieldsPayload: EventEmitter<FormFieldsPayload[]> =
+    new EventEmitter();
   public layout = inject(ResponsiveService);
   public innerHeight = input<number | null>(null);
+  public indexEditFieldButton = signal<number | null>(null);
   private readonly _fb = inject(FormBuilder);
   private readonly _alertService = inject(AlertsService);
   private readonly _dynamicFormService = inject(DynamicFormService);
 
   public dynamicForm: FormGroup = this._fb.group({
-    name: ['', [Validators.required, Validators.maxLength(100)] ],
+    name: ['', [Validators.required, Validators.maxLength(100)]],
     description: ['', [Validators.required, Validators.maxLength(255)]],
     fields: this._fb.array([]),
   });
@@ -30,7 +51,10 @@ export class FormSaveComponent {
   public fieldForm = this._fb.group({
     idFieldType: [1, [Validators.min(1)]],
     name: ['', [Validators.required, Validators.maxLength(50)]],
-    scannedDocumentSeparator: ['', [Validators.required, Validators.maxLength(255)]]
+    scannedDocumentSeparator: [
+      '',
+      [Validators.required, Validators.maxLength(255)],
+    ],
   });
 
   get fields(): FormArray {
@@ -45,18 +69,59 @@ export class FormSaveComponent {
     const field = this._fb.group({
       idFieldType: fieldForm.idFieldType,
       name: fieldForm.name,
-      scannedDocumentSeparator: fieldForm.scannedDocumentSeparator
+      scannedDocumentSeparator: fieldForm.scannedDocumentSeparator,
     });
 
     this.fields.push(field);
   }
 
-  removeField(index: number) {
+  public removeField(index: number) {
+    const { value } = this.fields.at(index);
     this.fields.removeAt(index);
+    this.emmitFormFieldsPayload();
+
+    this._alertService.toastAlert({
+      icon: 'success',
+      title: `the field ${value.name} was removed correctly!`,
+    });
+  }
+
+  public loadInfoField(index: number) {
+    const { value } = this.fields.controls[index];
+
+    this.fieldForm.reset({
+      name: value.name,
+      idFieldType: value.idFieldType,
+      scannedDocumentSeparator: value.scannedDocumentSeparator,
+    });
+
+    this.indexEditFieldButton.set(index);
+  }
+
+  public onEditField() {
+    if (this.indexEditFieldButton() === null) return;
+
+    if (this.fieldForm.invalid) {
+      this.fieldForm.markAllAsTouched();
+      return;
+    }
+
+    this.fields
+      .at(this.indexEditFieldButton()!)
+      .patchValue(this.fieldForm.value);
+
+    this.indexEditFieldButton.set(null);
+    this.fieldForm.reset({ idFieldType: 1 });
+    this.emmitFormFieldsPayload();
+
+    this._alertService.toastAlert({
+      icon: 'success',
+      title: `the field was updated correctly!`,
+    });
   }
 
   public getFormErrors(field: keyof ICreateDynamicFormPayload) {
-    return this.dynamicForm.get(field)?.errors
+    return this.dynamicForm.get(field)?.errors;
   }
 
   public getFormErrorsField(field: keyof FormFieldsPayload) {
@@ -64,19 +129,21 @@ export class FormSaveComponent {
   }
 
   public async onAddField() {
-    if(this.fieldForm.invalid) {
+    if (this.fieldForm.invalid) {
       this.fieldForm.markAllAsTouched();
       return;
     }
 
     const fieldFormValue = this.fieldForm.value as FormFieldsPayload;
 
-    const fieldExist = this.fields.controls.find(control => control.value.name === fieldFormValue.name);
+    const fieldExist = this.fields.controls.find(
+      (control) => control.value.name === fieldFormValue.name,
+    );
 
-    if(fieldExist) {
+    if (fieldExist) {
       this._alertService.toastAlert({
         icon: 'error',
-        title: `the field ${fieldFormValue.name} already exists`
+        title: `the field ${fieldFormValue.name} already exists`,
       });
 
       return;
@@ -84,14 +151,14 @@ export class FormSaveComponent {
 
     this.addField(fieldFormValue);
     this.fieldForm.reset({
-      idFieldType: 1
+      idFieldType: 1,
     });
 
     this.inputFieldName!.nativeElement.focus();
     this.emmitFormFieldsPayload();
     await this._alertService.toastAlert({
       icon: 'success',
-      title: 'Field was added'
+      title: 'Field was added',
     });
   }
 
@@ -103,7 +170,7 @@ export class FormSaveComponent {
   public onSubmit(): void {
     this.fieldForm.markAsUntouched();
 
-    if(this.dynamicForm.invalid) {
+    if (this.dynamicForm.invalid) {
       this.dynamicForm.markAllAsTouched();
       return;
     }
@@ -112,15 +179,15 @@ export class FormSaveComponent {
 
     this._dynamicFormService.create(payload).subscribe({
       next: (response) => {
-        this._alertService.toastAlert({ icon: 'success', title: response.message });
+        this._alertService.toastAlert({
+          icon: 'success',
+          title: response.message,
+        });
         this.dynamicForm.reset();
         this.fields.clear();
         this.emmitFormFieldsPayload();
       },
-      error: (err) =>
-        this._alertService.errorApi(err)
+      error: (err) => this._alertService.errorApi(err),
     });
   }
-
-
 }

@@ -91,10 +91,23 @@
           type="button"
           (click)="onAddField()"
           [class]="layout.responsive({ sm: 'w-100', md: '' })()"
+          *ngIf="indexEditFieldButton() === null;else editFieldButton"
       >
           <mat-icon>add</mat-icon>
           Add field
       </button>
+
+      <ng-template #editFieldButton>
+        <button
+            mat-flat-button extended
+            type="button"
+            (click)="onEditField()"
+            [class]="layout.responsive({ sm: 'w-100', md: '' })()"
+        >
+            <mat-icon>edit</mat-icon>
+            Edit field
+        </button>
+      </ng-template>
     </div>
 
     <mat-divider [textContent]="'Form fields'" ></mat-divider>
@@ -102,7 +115,8 @@
     <dynamic-form-fields-cards
       [innerHeight]="innerHeight()"
       [fieldsArray]="fieldsArray"
-      (indexDeleteField)=""
+      (indexDeleteField)="removeField($event)"
+      (indexEditField)="loadInfoField($event)"
     />
 
     <div class="div-save">
