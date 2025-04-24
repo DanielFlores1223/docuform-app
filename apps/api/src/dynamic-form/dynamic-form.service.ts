@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entities';
 import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
 import { FindAllDynamicFormDto } from './dto';
+import { SlugService } from 'src/common/services';
 
 interface ValidateConstrainstsOptions {
   formFieldsIds: number[],
@@ -19,6 +20,7 @@ interface ValidateConstrainstsOptions {
 @Injectable()
 export class DynamicFormService {
   constructor(
+    private readonly slugService: SlugService,
     @InjectRepository(DynamicForm)
     private readonly dynamicFormRepository: Repository<DynamicForm>,
     @InjectRepository(FormField)
@@ -47,7 +49,8 @@ export class DynamicFormService {
       name,
       description,
       user: user,
-      formFields: fieldsForDB
+      formFields: fieldsForDB,
+      slug: this.slugService.generateSlug(name)
     });
 
   }
