@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DynamicFormService } from './dynamic-form.service';
 import { CreateDynamicFormDto } from './dto/create-dynamic-form.dto';
 import { UpdateDynamicFormDto } from './dto/update-dynamic-form.dto';
@@ -11,6 +11,7 @@ import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces
 import { FindAllDynamicFormDto } from './dto';
 import { GetDynamicFormsResponse } from 'src/common/responses/get-dynanic-forms.response';
 import { PaginationResponse } from 'src/common/responses';
+import { OwnerDynamicFormGuard } from './guards/';
 
 @Controller('dynamic-form')
 @ApiTags('dynamic-form')
@@ -68,9 +69,16 @@ export class DynamicFormController {
     }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dynamicFormService.findOne(+id);
+  @Auth({ extraGuards: [OwnerDynamicFormGuard] })
+  @Get(':slug')
+  @ApiBearerAuth()
+  @ApiRestEndpointDescription({
+    summary: 'Get a dynamic form by slug, only owner can get own entities',
+    bodyInterface: 'ICreateDynamicFormPayload',
+    responseInterface: 'IApiResponse'
+  })
+  findOne(@Param('slug') slug: string) {
+    return this.dynamicFormService.findOne(slug);
   }
 
   @Patch(':id')

@@ -78,8 +78,8 @@ export class DynamicFormService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dynamicForm`;
+  findOne(slug: string) {
+    return `This action returns a #${slug} dynamicForm`;
   }
 
   update(id: number, updateDynamicFormDto: UpdateDynamicFormDto) {
