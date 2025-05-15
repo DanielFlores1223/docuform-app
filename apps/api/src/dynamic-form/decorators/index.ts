@@ -1,0 +1,1 @@
+export * from './get-dynamic-form/get-dynamic-form.decorator';

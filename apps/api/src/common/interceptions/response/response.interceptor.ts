@@ -15,8 +15,12 @@ export class ResponseInterceptor implements NestInterceptor {
   errorHandler(exception: HttpException, context: ExecutionContext): HttpException {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest();
+    const isHttpException = exception instanceof HttpException
 
-    const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+    if(!isHttpException)
+      console.log(exception);
+
+    const status = isHttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const responseException = exception.getResponse() as { message: string | string[], error: string };
 
     const errorResponse: ApiRestResponseModel<unknown> = {

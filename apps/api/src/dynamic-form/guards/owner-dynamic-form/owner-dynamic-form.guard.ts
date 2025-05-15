@@ -26,13 +26,16 @@ export class OwnerDynamicFormGuard implements CanActivate {
         if(!user) 
             throw new UnauthorizedException('Try to login')
 
-        const record = await this.dynamicFormRepository.findOneBy({ 
-            ...this._getParamFilter(params, ctx),
-            user: { id: user.id } 
+        const record = await this.dynamicFormRepository.findOne({ 
+            where: {
+                ...this._getParamFilter(params, ctx),
+                user: { id: user.id } 
+            }
         });
 
         if(!record) throw new NotFoundException() ;
         
+        req.dynamicForm = record;
         return true
     }
 
