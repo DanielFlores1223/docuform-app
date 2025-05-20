@@ -12,6 +12,9 @@ export class DynamicForm {
     name: string;
 
     @Column('character varying', { length: 255 })
+    slug: string;
+
+    @Column('character varying', { length: 255 })
     description: string;
 
     @ManyToOne(() => User, (user) => user.dymanicForms)

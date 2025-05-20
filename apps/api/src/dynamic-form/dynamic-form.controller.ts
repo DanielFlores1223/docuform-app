@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DynamicFormService } from './dynamic-form.service';
 import { CreateDynamicFormDto } from './dto/create-dynamic-form.dto';
 import { UpdateDynamicFormDto } from './dto/update-dynamic-form.dto';
@@ -7,10 +7,14 @@ import { ApiRestEndpointDescription, ApiRestResponse } from 'src/common/decorato
 import { Auth, GetUser } from 'src/auth/decorators';
 import { User } from 'src/auth/entities';
 import { ResponseController } from 'src/common/interfaces';
-import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
+import { IGetDynamicFormResponse, IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
 import { FindAllDynamicFormDto } from './dto';
 import { GetDynamicFormsResponse } from 'src/common/responses/get-dynanic-forms.response';
 import { PaginationResponse } from 'src/common/responses';
+import { OwnerDynamicFormGuard } from './guards/';
+import { GetDynamicForm } from './decorators';
+import { DynamicForm } from './entities';
+import { GetDynamicFormResponse } from 'src/common/responses/get-dynamic-form.respose';
 
 @Controller('dynamic-form')
 @ApiTags('dynamic-form')
@@ -68,9 +72,29 @@ export class DynamicFormController {
     }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dynamicFormService.findOne(+id);
+  @Auth({ extraGuards: [OwnerDynamicFormGuard] })
+  @Get(':slug')
+  @ApiBearerAuth()
+  @ApiRestEndpointDescription({
+    summary: 'Get a dynamic form by slug, only owner can get own entities',
+    bodyInterface: '',
+    responseInterface: 'IGetDynamicFormResponse'
+  })
+  @ApiRestResponse({
+    description: 'Ok',
+    pagination: true,
+    genericType: GetDynamicFormResponse,
+  })
+  async findOne(
+    @GetDynamicForm() idDynamicForm: DynamicForm,
+    @Param('slug') _: string,
+  ): Promise<ResponseController<IGetDynamicFormResponse>> {
+    const result = await this.dynamicFormService.findOne(idDynamicForm);
+
+    return {
+      message: 'Ok',
+      result
+    }
   }
 
   @Patch(':id')

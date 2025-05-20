@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entities';
 import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
 import { FindAllDynamicFormDto } from './dto';
+import { SlugService } from 'src/common/services';
 
 interface ValidateConstrainstsOptions {
   formFieldsIds: number[],
@@ -19,10 +20,11 @@ interface ValidateConstrainstsOptions {
 @Injectable()
 export class DynamicFormService {
   constructor(
+    private readonly slugService: SlugService,
     @InjectRepository(DynamicForm)
     private readonly dynamicFormRepository: Repository<DynamicForm>,
     @InjectRepository(FormField)
-    private readonly formFiledRepository: Repository<FormField>,
+    private readonly formFieldRepository: Repository<FormField>,
     @InjectRepository(FieldType)
     private readonly fieldTypeRepository: Repository<FieldType>
   ) {}
@@ -36,7 +38,7 @@ export class DynamicFormService {
     });
 
     const fieldsForDB = fields.map(field => {
-      return this.formFiledRepository.create({
+      return this.formFieldRepository.create({
         fieldType: { id: field.idFieldType },
         name: field.name,
         scannedDocumentSeparator: field.scannedDocumentSeparator
@@ -47,7 +49,8 @@ export class DynamicFormService {
       name,
       description,
       user: user,
-      formFields: fieldsForDB
+      formFields: fieldsForDB,
+      slug: this.slugService.generateSlug(name)
     });
 
   }
@@ -75,8 +78,15 @@ export class DynamicFormService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dynamicForm`;
+  async findOne(dynamicForm: DynamicForm) {
+    const formFields = await this.formFieldRepository.find({
+      where: { dynamicForm: { id: dynamicForm.id } }
+    });
+
+    return {
+      ...dynamicForm,
+      formFields
+    };
   }
 
   update(id: number, updateDynamicFormDto: UpdateDynamicFormDto) {

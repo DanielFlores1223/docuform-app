@@ -1,8 +1,14 @@
-import { UseGuards, applyDecorators } from '@nestjs/common';
+import { CanActivate, UseGuards, applyDecorators } from '@nestjs/common';
 import { JwtGuardGuard } from 'src/auth/guards';
 
-export const Auth = () => {
+interface IAuthDecorator {
+    extraGuards?: (CanActivate | Function)[],
+}
+
+export const Auth = (args?: IAuthDecorator) => {
+    const extraGuards = args?.extraGuards || [];
+
     return applyDecorators(
-        UseGuards(JwtGuardGuard),
+        UseGuards(JwtGuardGuard, ...extraGuards),
     )
 };
