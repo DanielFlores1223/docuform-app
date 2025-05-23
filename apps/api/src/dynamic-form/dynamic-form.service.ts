@@ -9,6 +9,7 @@ import { IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces
 import { FindAllDynamicFormDto } from './dto';
 import { SlugService } from 'src/common/services';
 import { DynamicFormDBValidatorService } from './services';
+import { GetDynamicFormsResponse, GetDynamicFormResponse, GetFormFieldsResponse } from './responses';
 
 
 @Injectable()
@@ -67,7 +68,7 @@ export class DynamicFormService {
 
     return {
       total,
-      records
+      records: records.map(record => new GetDynamicFormsResponse(record))
     }
   }
 
@@ -76,10 +77,12 @@ export class DynamicFormService {
       where: { dynamicForm: { id: dynamicForm.id } }
     });
 
-    return {
+    const formFieldsInstances = formFields.map(formField => new GetFormFieldsResponse(formField));
+
+    return new GetDynamicFormResponse({
       ...dynamicForm,
-      formFields
-    };
+      formFields: formFieldsInstances,
+    });
   }
 
   update(id: number, updateDynamicFormDto: UpdateDynamicFormDto) {
