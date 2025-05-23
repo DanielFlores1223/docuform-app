@@ -9,12 +9,12 @@ import { User } from 'src/auth/entities';
 import { ResponseController } from 'src/common/interfaces';
 import { IGetDynamicFormResponse, IGetDynamicFormsResponse, IPaginationResponse } from 'global-interfaces';
 import { FindAllDynamicFormDto } from './dto';
-import { GetDynamicFormsResponse } from 'src/common/responses/get-dynanic-forms.response';
+import { GetDynamicFormsResponse } from 'src/dynamic-form/responses/get-dynanic-forms.response';
 import { PaginationResponse } from 'src/common/responses';
 import { OwnerDynamicFormGuard } from './guards/';
 import { GetDynamicForm } from './decorators';
 import { DynamicForm } from './entities';
-import { GetDynamicFormResponse } from 'src/common/responses/get-dynamic-form.respose';
+import { GetDynamicFormResponse } from 'src/dynamic-form/responses/get-dynamic-form.respose';
 
 @Controller('dynamic-form')
 @ApiTags('dynamic-form')
