@@ -11,6 +11,7 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { FormSaveComponent } from './components/form-save/form-save.component';
 import { FieldsCardsComponent } from './components/fields-cards/fields-cards.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicFormItemCardComponent } from './components/dynamic-form-item-card/dynamic-form-item-card.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     PreviewComponent,
     FormSaveComponent,
     FieldsCardsComponent,
+    DynamicFormItemCardComponent,
   ],
   imports: [
     CommonModule,

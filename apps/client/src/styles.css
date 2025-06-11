@@ -17,6 +17,14 @@ mat-form-field {
   flex-grow: 1;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  background-color:#ebf5fb  ;
+}
+
 /* MATERIAL */
 .mat-grid-tile.create-form-content .mat-grid-tile-content {
   align-items: start;
